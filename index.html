@@ -54,18 +54,33 @@
 
 <body class="dx-viewport">
     <div class="container">
+        <div class="row" style="right: auto;">
+            <button class="dx-button" style="width:auto">Log In</button>
+            <div id="popup-login"></div>
+        </div>
         <div class="row">
             <div class="col-lg-12">
-                <h1>
-                    TEST
-                </h1>
+                
                 <div class="demo-container">
                     <div id="gridContainer"></div>
                 </div>
             </div>
         </div>
-        
+        <div>
+            <form action="post" aria-placeholder="Username">
+                <div class="container">
+                    <label for="uname"><b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" name="uname" required>
+                
+                    <label for="psw"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="psw" required>
+                        
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+        </div>
     </div>
+    
     
 </body>
 
