@@ -16,7 +16,7 @@ $(() => {
     validationGroup: 'customerData',
     items: [{
       itemType: 'group',
-      caption: 'Credentials',
+      caption: 'Create account',
       items: [{
         dataField: 'Email',
         validationRules: [{
@@ -99,3 +99,4 @@ $(() => {
     e.preventDefault();
   });
 });
+
