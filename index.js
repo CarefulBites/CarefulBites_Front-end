@@ -78,11 +78,11 @@ $(() => {
           popup.show();
       }
     });
-    $("#login-button").dxButton({
-      text: "Log In",
+    $("#theme-button").dxButton({
+      text: "change theme",
       styling: 'contained',
       onClick: () => {
-          alert('Logged In')
+        DevExpress.ui.themes.current("material.blue.dark");
       }
     });
   });
