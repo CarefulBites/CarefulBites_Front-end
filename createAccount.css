@@ -1,0 +1,18 @@
+.dx-field-item-label-location-top {
+  padding-left: 0;
+  font-size: 20px;
+}
+
+.container {
+  padding-top: 150px;
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    padding-top: 100px;
+  }
+}
+
+body {
+  min-height: 100vh;
+}
