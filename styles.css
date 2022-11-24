@@ -11,3 +11,6 @@ span.psw {
     display: block;
     float: none;
  }
+ .navbarButton {
+    width: auto;
+ }

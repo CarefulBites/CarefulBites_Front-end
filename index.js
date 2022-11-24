@@ -73,6 +73,7 @@ $(() => {
 
     $("#popup-button").dxButton({
       styling: 'contained',
+      icon: 'user',
       text: "Log In",
       onClick: () => {
           popup.show();
@@ -82,7 +83,11 @@ $(() => {
       text: "change theme",
       styling: 'contained',
       onClick: () => {
-        DevExpress.ui.themes.current("material.blue.dark");
+        if (DevExpress.ui.themes.current() == "material.blue.dark") {
+          DevExpress.ui.themes.current("material.blue.light");
+        } else {
+          DevExpress.ui.themes.current("material.blue.dark");
+        }
       }
     });
   });
