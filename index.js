@@ -25,12 +25,64 @@ $(() => {
     })
     const popupContentTemplate = function () {
       return $('<div>').append(
-        $(`<p>Full Name: <span>${employee.FirstName}</span>
-                           <span>${employee.LastName}</span></p>`),
-        $(`<p>Birth Date: <span>${employee.BirthDate}</span></p>`),
-        $(`<p>Address: <span>${employee.Address}</span></p>`),
-        $(`<p>Hire Date: <span>${employee.HireDate}</span></p>`),
-        $(`<p>Position: <span>${employee.Position}</span></p>`),
+        $(`
+        <form action="post" aria-placeholder="Username">
+            <div class="container">
+                <label for="uname"><b>Username</b></label>
+                <input type="text" id="username" placeholder="Enter Username" name="uname" required>
+            
+                <label for="psw"><b>Password</b></label>
+                <input type="password" id="password" placeholder="Enter Password" name="psw" required>
+            </div>
+        </form>`)
       );
     };
+    const popup = $('#popup-login').dxPopup({
+      contentTemplate: popupContentTemplate,
+      width: 300,
+      height: 300,
+      container: '.dx-viewport',
+      showTitle: true,
+      title: 'Log In',
+      visible: false,
+      dragEnabled: false,
+      hideOnOutsideClick: true,
+      showCloseButton: false,
+      toolbarItems: [{
+        widget: 'dxButton',
+        toolbar: 'bottom',
+        location: 'center',
+        options: {
+        text: 'Log In',
+        onClick() {
+          alert('TEST')
+        },
+      }
+      },{
+        widget: 'dxButton',
+        toolbar: 'bottom',
+        location: 'center',
+        options: {
+        text: 'Create Account',
+        onClick() {
+          alert('TEST')
+        },
+      }
+      }]
+    }).dxPopup('instance');
+
+    $("#popup-button").dxButton({
+      styling: 'contained',
+      text: "Log In",
+      onClick: () => {
+          popup.show();
+      }
+    });
+    $("#login-button").dxButton({
+      text: "Log In",
+      styling: 'contained',
+      onClick: () => {
+          alert('Logged In')
+      }
+    });
   });

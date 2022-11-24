@@ -1,0 +1,13 @@
+/* Full-width input fields */
+input[id=username], input[id=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+span.psw {
+    display: block;
+    float: none;
+ }
