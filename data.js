@@ -119,3 +119,8 @@ const customers = [{
     Fax: '(800) 445-6938',
     Website: 'http://www.nowebsitescreenshop.com',
   }];
+
+  const userForm = [{
+    Username: '',
+    Password: ''
+  }]

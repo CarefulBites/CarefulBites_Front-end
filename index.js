@@ -25,16 +25,25 @@ $(() => {
     })
     const popupContentTemplate = function () {
       return $('<div>').append(
-        $(`
-        <form action="post" aria-placeholder="Username">
-            <div class="container">
-                <label for="uname"><b>Username</b></label>
-                <input type="text" id="username" placeholder="Enter Username" name="uname" required>
+        $('<div />').attr('id', 'login-form').dxForm({
+          labelMode: 'floating',
+          formData: userForm[0],
+          readOnly: false,
+          showColonAfterLabel: true,
+          labelLocation: 'left',
+          minColWidth: 300,
+          colCount: 1,
+        })
+        // $(`
+        // <form action="post" aria-placeholder="Username">
+        //     <div class="container">
+        //         <label for="uname"><b>Username</b></label>
+        //         <input type="text" id="username" placeholder="Enter Username" name="uname" required>
             
-                <label for="psw"><b>Password</b></label>
-                <input type="password" id="password" placeholder="Enter Password" name="psw" required>
-            </div>
-        </form>`)
+        //         <label for="psw"><b>Password</b></label>
+        //         <input type="password" id="password" placeholder="Enter Password" name="psw" required>
+        //     </div>
+        // </form>`)
       );
     };
     const popup = $('#popup-login').dxPopup({
@@ -65,7 +74,7 @@ $(() => {
         options: {
         text: 'Create Account',
         onClick() {
-          alert('TEST')
+          location.href = '/CreateAccount.html'
         },
       }
       }]
