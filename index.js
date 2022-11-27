@@ -90,8 +90,4 @@ $(() => {
         }
       }
     });
-
-    $('#longtabs > .tabs-container').dxTabs({
-      dataSource: longtabs,
-    });
   });
