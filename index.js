@@ -1,5 +1,5 @@
 $(() => {
-    $('#gridContainer').dxDataGrid({
+    $('#itemGrid').dxDataGrid({
       dataSource: customers,
       keyExpr: 'ID',
       filterRow: {
@@ -89,5 +89,9 @@ $(() => {
           DevExpress.ui.themes.current("material.blue.dark");
         }
       }
+    });
+
+    $('#longtabs > .tabs-container').dxTabs({
+      dataSource: longtabs,
     });
   });
