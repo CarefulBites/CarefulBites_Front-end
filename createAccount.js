@@ -98,5 +98,25 @@ $(() => {
 
     e.preventDefault();
   });
+
+  $("#popup-button").dxButton({
+    styling: 'contained',
+    icon: 'user',
+    text: "Log In",
+    onClick: () => {
+        popup.show();
+    }
+  });
+  $("#theme-button").dxButton({
+    text: "change theme",
+    styling: 'contained',
+    onClick: () => {
+      if (DevExpress.ui.themes.current() == "material.blue.dark") {
+        DevExpress.ui.themes.current("material.blue.light");
+      } else {
+        DevExpress.ui.themes.current("material.blue.dark");
+      }
+    }
+  });
 });
 
