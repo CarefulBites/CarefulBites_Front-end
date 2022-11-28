@@ -3,4 +3,6 @@ const formData = {
     Password: '',
     Accepted: false,
   };
+
+let themeLayout = 'dark'
   

@@ -3,10 +3,6 @@
   font-size: 20px;
 }
 
-.container {
-  padding-top: 150px;
-}
-
 @media screen and (max-width: 600px) {
   .container {
     padding-top: 100px;
