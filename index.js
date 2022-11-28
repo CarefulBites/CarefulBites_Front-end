@@ -1,5 +1,5 @@
 $(() => {
-    $('#gridContainer').dxDataGrid({
+    $('#itemGrid').dxDataGrid({
       dataSource: customers,
       keyExpr: 'ID',
       filterRow: {
