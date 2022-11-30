@@ -1,7 +1,8 @@
 $(() => {
+
     $('#itemGrid').dxDataGrid({
-      dataSource: customers,
-      keyExpr: 'ID',
+      dataSource: ItemStore,
+      keyExpr: 'itemId',
       filterRow: {
         visible: true,
         applyFilter: 'auto',
@@ -15,12 +16,49 @@ $(() => {
         visible: true,
       },
       editing: {
-        mode: 'cell',
+        mode: 'row',
         allowUpdating: true,
         allowAdding: true,
         allowDeleting: true,
       },
-      columns: ['CompanyName', 'City', 'State', 'Phone', 'Fax'],
+      onEditingStart: function(e) {
+        row = e.data
+      },
+      columns: [
+        {
+        dataField:'itemId',
+        dataType:'number'
+        }, 
+        {
+          dataField:'name',
+          dataType:'string'
+        }, 
+        {
+          dataField:'amount',
+          dataType:'number'
+        }, 
+        {
+          dataField:'unit',
+        }, 
+        {
+          dataField:'itemStorageId',
+        }, 
+        {
+          dataField:'caloriesPer',
+          dataType:'number'
+        }, 
+        {
+          dataField:'expirationDate',
+          dataType:'date'
+        }, 
+        {
+          dataField:'openDate',
+          dataType:'date'
+        }, 
+        {
+          dataField:'daysAfterOpen',
+          dataType:'number'
+        },],
       showBorders: true,
     })
     const popupContentTemplate = function () {
