@@ -1,124 +1,114 @@
-const customers = [{
-    ID: 1,
-    CompanyName: 'Super Mart of the West',
-    Address: '702 SW 8th Street',
-    City: 'Bentonville',
-    State: 'Arkansas',
-    Zipcode: 72716,
-    Phone: '(800) 555-2797',
-    Fax: '(800) 555-2171',
-    Website: 'http://www.nowebsitesupermart.com',
-  }, {
-    ID: 2,
-    CompanyName: 'Electronics Depot',
-    Address: '2455 Paces Ferry Road NW',
-    City: 'Atlanta',
-    State: 'Georgia',
-    Zipcode: 30339,
-    Phone: '(800) 595-3232',
-    Fax: '(800) 595-3231',
-    Website: 'http://www.nowebsitedepot.com',
-  }, {
-    ID: 3,
-    CompanyName: 'K&S Music',
-    Address: '1000 Nicllet Mall',
-    City: 'Minneapolis',
-    State: 'Minnesota',
-    Zipcode: 55403,
-    Phone: '(612) 304-6073',
-    Fax: '(612) 304-6074',
-    Website: 'http://www.nowebsitemusic.com',
-  }, {
-    ID: 4,
-    CompanyName: "Tom's Club",
-    Address: '999 Lake Drive',
-    City: 'Issaquah',
-    State: 'Washington',
-    Zipcode: 98027,
-    Phone: '(800) 955-2292',
-    Fax: '(800) 955-2293',
-    Website: 'http://www.nowebsitetomsclub.com',
-  }, {
-    ID: 5,
-    CompanyName: 'E-Mart',
-    Address: '3333 Beverly Rd',
-    City: 'Hoffman Estates',
-    State: 'Illinois',
-    Zipcode: 60179,
-    Phone: '(847) 286-2500',
-    Fax: '(847) 286-2501',
-    Website: 'http://www.nowebsiteemart.com',
-  }, {
-    ID: 6,
-    CompanyName: 'Walters',
-    Address: '200 Wilmot Rd',
-    City: 'Deerfield',
-    State: 'Illinois',
-    Zipcode: 60015,
-    Phone: '(847) 940-2500',
-    Fax: '(847) 940-2501',
-    Website: 'http://www.nowebsitewalters.com',
-  }, {
-    ID: 7,
-    CompanyName: 'StereoShack',
-    Address: '400 Commerce S',
-    City: 'Fort Worth',
-    State: 'Texas',
-    Zipcode: 76102,
-    Phone: '(817) 820-0741',
-    Fax: '(817) 820-0742',
-    Website: 'http://www.nowebsiteshack.com',
-  }, {
-    ID: 8,
-    CompanyName: 'Circuit Town',
-    Address: '2200 Kensington Court',
-    City: 'Oak Brook',
-    State: 'Illinois',
-    Zipcode: 60523,
-    Phone: '(800) 955-2929',
-    Fax: '(800) 955-9392',
-    Website: 'http://www.nowebsitecircuittown.com',
-  }, {
-    ID: 9,
-    CompanyName: 'Premier Buy',
-    Address: '7601 Penn Avenue South',
-    City: 'Richfield',
-    State: 'Minnesota',
-    Zipcode: 55423,
-    Phone: '(612) 291-1000',
-    Fax: '(612) 291-2001',
-    Website: 'http://www.nowebsitepremierbuy.com',
-  }, {
-    ID: 10,
-    CompanyName: 'ElectrixMax',
-    Address: '263 Shuman Blvd',
-    City: 'Naperville',
-    State: 'Illinois',
-    Zipcode: 60563,
-    Phone: '(630) 438-7800',
-    Fax: '(630) 438-7801',
-    Website: 'http://www.nowebsiteelectrixmax.com',
-  }, {
-    ID: 11,
-    CompanyName: 'Video Emporium',
-    Address: '1201 Elm Street',
-    City: 'Dallas',
-    State: 'Texas',
-    Zipcode: 75270,
-    Phone: '(214) 854-3000',
-    Fax: '(214) 854-3001',
-    Website: 'http://www.nowebsitevideoemporium.com',
-  }, {
-    ID: 12,
-    CompanyName: 'Screen Shop',
-    Address: '1000 Lowes Blvd',
-    City: 'Mooresville',
-    State: 'North Carolina',
-    Zipcode: 28117,
-    Phone: '(800) 445-6937',
-    Fax: '(800) 445-6938',
-    Website: 'http://www.nowebsitescreenshop.com',
-  }];
+const baseURL = "https://carefulbitesapi20221128134821.azurewebsites.net/CarefulBites"
+
+let row = null
+
+const ItemStore = new DevExpress.data.CustomStore({
+    key: 'itemId',
+    load(loadOptions) {
+      const deferred = $.Deferred();
+      const args = {};
+
+      [
+        'skip',
+        'take',
+        'requireTotalCount',
+        'requireGroupCount',
+        'sort',
+        'filter',
+        'totalSummary',
+        'group',
+        'groupSummary',
+      ].forEach((i) => {
+        if (i in loadOptions && isNotEmpty(loadOptions[i])) {
+          args[i] = JSON.stringify(loadOptions[i]);
+        }
+      });
+      $.ajax({
+        url: baseURL + "/foodItems",
+        dataType: 'json',
+        data: args,
+        success(result) {
+          deferred.resolve(result, {
+            totalCount: result.totalCount,
+            summary: result.summary,
+            groupCount: result.groupCount,
+          });
+        },
+        error() {
+          deferred.reject('Data Loading Error');
+        },
+        timeout: 5000,
+      });
+
+      return deferred.promise();
+    },
+    insert: function(values) {
+      var deferred = $.Deferred();
+      $.ajax({
+        url: baseURL + "/foodItems",
+        method: 'POST',
+        data: JSON.stringify(values),
+        contentType: "application/json; charset=utf-8",
+      }) 
+      .done(deferred.resolve)
+      .fail(function(e){
+          deferred.reject("Insertion failed");
+      });
+      return deferred.promise();
+    },
+    update: function(key, values) {
+      jsonpatchstr = "["
+      Object.keys(values).forEach(key => {
+        console.log(key, values[key]);
+        if (typeof(values[key]) == 'number' || typeof(values[key]) == 'object') {
+          jsonpatchstr += `{ \"op\": \"replace\", \"path\": \"/${key}\", \"value\": ${values[key]} },`
+        }
+        else {
+          jsonpatchstr += `{ \"op\": \"replace\", \"path\": \"/${key}\", \"value\": \"${values[key]}\" },`
+        }
+        
+      })
+      jsonpatchstr = jsonpatchstr.slice(0, -1)
+      jsonpatchstr += "]"
+
+      var deferred = $.Deferred();
+      $.ajax({
+          url: baseURL + "/foodItems/" + encodeURIComponent(key),
+          type: "patch",
+          dataType: "json",
+          data: jsonpatchstr,
+          contentType: "application/json-patch+json; charset=utf-8",
+      })
+      .done(deferred.resolve)
+      .fail(function(e){
+          deferred.reject("Update failed");
+          console.log(e)
+      });
+      return deferred.promise();
+    },
+    remove: function(key) {
+      var deferred = $.Deferred();
+      $.ajax({
+          url: baseURL + "/foodItems/" + encodeURIComponent(key),
+          method: "DELETE",
+          contentType: "application/json; charset=utf-8",
+      })
+      .done(deferred.resolve)
+      .fail(function(e){
+          deferred.reject("Deletion failed");
+      });
+      return deferred.promise();
+    },
+    byKey: function (key) {
+      var d = new $.Deferred();
+      $.get(baseURL + "/foodItems/" + key)
+          .done(function (dataItem) {
+              return dataItem
+          });
+      return d.promise().then();
+    }
+
+  });
 
   const userForm = [{
     Username: '',
