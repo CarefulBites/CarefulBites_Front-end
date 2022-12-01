@@ -82,7 +82,6 @@ const ItemStore = new DevExpress.data.CustomStore({
       .done(deferred.resolve)
       .fail(function(e){
           deferred.reject("Update failed");
-          console.log(e)
       });
       return deferred.promise();
     },
@@ -112,5 +111,5 @@ const ItemStore = new DevExpress.data.CustomStore({
 
   const userForm = [{
     Username: '',
-    Password: ''
+    Password: '',
   }]

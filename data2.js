@@ -1,7 +1,6 @@
 const formData = {
-    Email: '',
-    Password: '',
-    Accepted: false,
+    username: '',
+    password: '',
   };
 
 let themeLayout = 'dark'

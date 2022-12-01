@@ -1,8 +1,9 @@
 $(() => {
-  if (themeLayout = 'light') {
+  const baseURL = "https://carefulbitesapi20221128134821.azurewebsites.net/CarefulBites"
+  if (themeLayout == 'light') {
     DevExpress.ui.themes.current("material.blue.light");
   }
-  else{
+  else {
     DevExpress.ui.themes.current("material.blue.dark");
   }
 
@@ -25,22 +26,19 @@ $(() => {
       itemType: 'group',
       caption: 'Create account',
       items: [{
-        dataField: 'Email',
+        dataField: 'username',
         validationRules: [{
           type: 'required',
-          message: 'Email is required',
-        }, {
-          type: 'email',
-          message: 'Email is invalid',
+          message: 'Username is required',
         }, {
           type: 'async',
-          message: 'Email is already registered',
+          message: 'Username is already registered',
           validationCallback(params) {
             return sendRequest(params.value);
           },
         }],
       }, {
-        dataField: 'Password',
+        dataField: 'password',
         editorOptions: {
           mode: 'password',
         },
@@ -63,27 +61,29 @@ $(() => {
           type: 'compare',
           message: "'Password' and 'Confirm Password' do not match",
           comparisonTarget() {
-            return formWidget.option('formData').Password;
+            return formWidget.option('formData').password;
           },
         }],
       }],
-    }, {
-      itemType: 'group',
-      items: [{
-        dataField: 'Accepted',
-        label: {
-          visible: false,
-        },
-        editorOptions: {
-          text: 'I agree to the Terms and Conditions',
-        },
-        validationRules: [{
-          type: 'compare',
-          comparisonTarget() { return true; },
-          message: 'You must agree to the Terms and Conditions',
-        }],
-      }],
-    }, {
+    }, 
+    // {
+    //   itemType: 'group',
+    //   items: [{
+    //     dataField: 'Accepted',
+    //     label: {
+    //       visible: false,
+    //     },
+    //     editorOptions: {
+    //       text: 'I agree to the Terms and Conditions',
+    //     },
+    //     validationRules: [{
+    //       type: 'compare',
+    //       comparisonTarget() { return true; },
+    //       message: 'You must agree to the Terms and Conditions',
+    //     }],
+    //   }],
+    // }, 
+    {
       itemType: 'button',
       horizontalAlignment: 'left',
       buttonOptions: {
@@ -94,7 +94,8 @@ $(() => {
     }],
   }).dxForm('instance');
 
-  $('#form-container').on('submit', (e) => {
+  $('#Create-Account-form-container').on('submit', (e) => {
+    
     DevExpress.ui.notify({
       message: 'You have submitted the form',
       position: {
@@ -102,13 +103,26 @@ $(() => {
         at: 'center top',
       },
     }, 'success', 3000);
-
+    console.log(e)
     e.preventDefault();
+    var deferred = $.Deferred();
+      $.ajax({
+        url: baseURL + "/users/",
+        dataType: 'json',
+        data: JSON.stringify(formData),
+        method: "POST",
+        contentType: "application/json; charset=utf-8",
+      })
+        .done(deferred.resolve)
+        .fail(function (e) {
+          deferred.reject("Create Account failed");
+        });
+      return deferred.promise();
   });
-  
+
   $("#theme-button").dxButton({
     text: "change theme",
-    styling: 'contained',   
+    styling: 'contained',
     onClick: () => {
       if (DevExpress.ui.themes.current() == "material.blue.dark") {
         DevExpress.ui.themes.current("material.blue.light");
