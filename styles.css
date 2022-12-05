@@ -14,7 +14,6 @@ span.psw {
 
  body {
     min-height: 100vh;
-    min-width: 100vw;
  }
 
 .logo {
@@ -59,4 +58,10 @@ nav {
 
  .navbar-button {
   margin-right: 10px;
+ }
+
+ #itemDiv 
+ {
+   width: 100%;
+   padding-left: 20px;
  }
