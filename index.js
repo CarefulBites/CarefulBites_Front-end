@@ -57,7 +57,16 @@ $(() => {
       },
       {
         dataField: 'daysAfterOpen',
-        dataType: 'number'
+        dataType: 'number',
+        calculateCellValue: function(rowData) {
+          if (rowData.openDate) {
+            currentDate = new Date()
+            openDate = new Date(Date.parse(rowData.openDate))
+            daysAfterOpenResult = Math.trunc((currentDate - openDate) / (1000 * 3600 * 24))
+            return daysAfterOpenResult == 1 ? daysAfterOpenResult + ' day' : daysAfterOpenResult + ' days'
+          }
+          
+        }
       },],
     showBorders: true,
   })
